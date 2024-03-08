@@ -181,18 +181,13 @@ const animationTimeline = () => {
       },
       0.2
     )
-    .from(
-      ".girl-dp",
-      0.5,
-      {
-        scale: 3.5,
-        opacity: 0,
-        x: 25,
-        y: -25,
-        rotationZ: -45,
-      },
-      "-=2"
-    )
+	.from(".image-container", 0.5, {
+      opacity: 0,
+      y: 30,
+    }, "-=2")
+	.to(".image-container", 0.5, {
+      opacity: 1, // Add this line to make the image visible
+    }, "+=2")
     .from(".hat", 0.5, {
       x: -100,
       y: 350,
@@ -250,6 +245,10 @@ const animationTimeline = () => {
       },
       0.3
     )
+	.to(".image-container", 0.5, {
+      opacity: 0,
+      y: -30,
+    }, "+=2")
     .to(".six", 0.5, {
       opacity: 0,
       y: 30,
@@ -292,14 +291,25 @@ const animationTimeline = () => {
   });
     document.getElementById("liked").innerHTML = "Я знал, что тебе понравится)";
   };
-  btnNo.onclick = (e) => {
-    var x = Math.random() * (window.innerWidth - e.target.offsetWidth);
-    var y = Math.random() * (window.innerHeight - e.target.offsetHeight);
-    TweenMax.to(e.target, 0.5, {
-      x: x,
-      y: y,
-      ease: Power2.easeOut,
-    });
+  const containerRect = document.querySelector('.container').getBoundingClientRect();
+
+	btnNo.onmouseover = (e) => {
+		const containerWidth = containerRect.width;
+		const containerHeight = containerRect.height;
+		const btnWidth = e.target.offsetWidth;
+		const btnHeight = e.target.offsetHeight;
+
+		const maxX = (containerWidth - btnWidth)/2;
+		const maxY = (containerHeight - btnHeight)/2;
+
+		const randomX = Math.random() * maxX - maxX;
+		const randomY = Math.random() * maxY - maxY;
+
+		TweenMax.to(e.target, 0.5, {
+			x: randomX,
+			y: randomY,
+			ease: Power2.easeOut,
+		});
   };
   
 };
